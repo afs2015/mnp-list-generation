@@ -84,7 +84,9 @@ def main ():
 
     # Grab list of guests to be appended to the list
     additional_guests_list = create_unparsed_list('input/guests.csv', False)
-    print(additional_guests_list)
+
+    # Combine the lists
+    entry_list.extend(additional_guests_list)
 
     # Parse list of entries to dance
     entry_list = parse_entries(entry_list)
