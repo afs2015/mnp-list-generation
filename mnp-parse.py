@@ -29,25 +29,13 @@ def main ():
     else:
         unparsed_csv  = 'input/SampleFile.csv'
 
-    raw_entry_list = create_unparsed_list(unparsed_csv)
+    entry_list = create_unparsed_list(unparsed_csv)
 
-    # Open unparsed csv
-    with open(unparsed_csv) as infile:
-        csv_reader = csv.reader(infile, delimiter=',')
+    # Sort Alphabetically
+    entry_list.sort(key=itemgetter(0))
 
-        # Skip first three lines
-        for skip in range(3):
-            next(csv_reader)
-
-        entry_list = []
-        for row in csv_reader:
-            entry_list.append([row[0].lower(), row[1].lower()])
-
-        # Sort Alphabetically
-        entry_list.sort(key=itemgetter(0))
-
-        # Remove Duplicates
-        entry_list = list(entry_list for entry_list,_ in itertools.groupby(entry_list))
+     # Remove Duplicates
+    entry_list = list(entry_list for entry_list,_ in itertools.groupby(entry_list))
 
     # Open outfile to write to
     with open('output_file.csv', mode='w') as outfile:
