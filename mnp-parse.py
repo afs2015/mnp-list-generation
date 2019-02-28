@@ -40,6 +40,21 @@ def parse_entries(entry_list):
 
     return parsed_list
 
+def write_outfile(parsed_data, outfile):
+    """ Takes in parsed_data (list) and outfile (str).
+        It writes to a file and returns a status(str). """
+
+    # Open outfile to write to
+    with open(outfile, mode='w') as outfile:
+        entry_writer = csv.writer(outfile, delimiter=',',quotechar='"')
+
+        for entry in parsed_data:
+            entry_writer.writerow([entry[0], entry[1]])
+
+    status = "The entrance file was successfully created!"
+
+    return status
+
 def main ():
 
     # Check if filename provided
@@ -54,12 +69,9 @@ def main ():
     # Parse list of entries to dance
     entry_list = parse_entries(entry_list)
 
-    # Open outfile to write to
-    with open(get_filename_datetime(), mode='w') as outfile:
-        entry_writer = csv.writer(outfile, delimiter=',',quotechar='"')
-
-        for entry in entry_list:
-            entry_writer.writerow([entry[0], entry[1]])
+    # Write to outfile and return status
+    output = write_outfile(entry_list, get_filename_datetime())
+    print(output)
 
 if __name__== "__main__":
         main()
