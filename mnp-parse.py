@@ -4,17 +4,19 @@ import sys
 from datetime import date
 from operator import itemgetter
 
-def create_unparsed_list(unparsed_csv):
-    """ This takes in an unparsed_csv (str) and returns a list of
-        unparsed strings representing entries to a dance. """
+def create_unparsed_list(unparsed_csv, skip_flag=True):
+    """ This takes in an unparsed_csv (str) and skip_flag (str)
+        It returns a list of unparsed strings representing
+        entries to a dance. """
 
     # Open unparsed csv
     with open(unparsed_csv) as infile:
         csv_reader = csv.reader(infile, delimiter=',')
 
         # Skip first three lines
-        for skip in range(3):
-            next(csv_reader)
+        if skip_flag:
+            for skip in range(3):
+                next(csv_reader)
 
         entry_list = []
         for row in csv_reader:
@@ -22,11 +24,13 @@ def create_unparsed_list(unparsed_csv):
 
     return entry_list
 
+
 def get_filename_datetime():
     """ Use current date to get a text file name. Returns a (str) """
 
     filename = "BLH-entry-list_{}.csv".format(date.today())
     return filename
+
 
 def parse_entries(entry_list):
     """ Takes in unparsed_csv (list), runs some parsing tasks, and
@@ -65,13 +69,22 @@ def write_outfile(parsed_data, outfile):
 def main ():
 
     # Check if filename provided
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
+        guest_csv = sys.argv[2]
+        unparsed_csv = sys.argv[1]
+    elif len(sys.argv) > 1:
+        guest_csv = 'input/guests.csv'
         unparsed_csv  = sys.argv[1]
     else:
+        guest_csv = 'input/guests.csv'
         unparsed_csv  = 'input/SampleFile.csv'
 
     # Create list of entries to dance from .csv
     entry_list = create_unparsed_list(unparsed_csv)
+
+    # Grab list of guests to be appended to the list
+    additional_guests_list = create_unparsed_list('input/guests.csv', False)
+    print(additional_guests_list)
 
     # Parse list of entries to dance
     entry_list = parse_entries(entry_list)
