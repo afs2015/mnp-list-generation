@@ -1,6 +1,7 @@
 import csv
 import itertools
 import sys
+from datetime import date
 from operator import itemgetter
 
 def create_unparsed_list(unparsed_csv):
@@ -21,6 +22,12 @@ def create_unparsed_list(unparsed_csv):
 
     return entry_list
 
+def get_filename_datetime():
+    """ Use current date to get a text file name. Returns a (str) """
+
+    filename = "BLH-entry-list_{}.csv".format(date.today())
+    return filename
+
 def main ():
 
     # Check if filename provided
@@ -37,8 +44,9 @@ def main ():
      # Remove Duplicates
     entry_list = list(entry_list for entry_list,_ in itertools.groupby(entry_list))
 
+
     # Open outfile to write to
-    with open('output_file.csv', mode='w') as outfile:
+    with open(get_filename_datetime(), mode='w') as outfile:
         entry_writer = csv.writer(outfile, delimiter=',',quotechar='"')
 
         for entry in entry_list:
