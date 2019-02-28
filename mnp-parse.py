@@ -28,6 +28,18 @@ def get_filename_datetime():
     filename = "BLH-entry-list_{}.csv".format(date.today())
     return filename
 
+def parse_entries(entry_list):
+    """ Takes in unparsed_csv (list), runs some parsing tasks, and
+        returns a parsed_list (list) """
+
+    # Sort Alphabetically
+    entry_list.sort(key=itemgetter(0))
+
+     # Remove Duplicates
+    parsed_list = list(entry_list for entry_list,_ in itertools.groupby(entry_list))
+
+    return parsed_list
+
 def main ():
 
     # Check if filename provided
@@ -36,14 +48,11 @@ def main ():
     else:
         unparsed_csv  = 'input/SampleFile.csv'
 
+    # Create list of entries to dance from .csv
     entry_list = create_unparsed_list(unparsed_csv)
 
-    # Sort Alphabetically
-    entry_list.sort(key=itemgetter(0))
-
-     # Remove Duplicates
-    entry_list = list(entry_list for entry_list,_ in itertools.groupby(entry_list))
-
+    # Parse list of entries to dance
+    entry_list = parse_entries(entry_list)
 
     # Open outfile to write to
     with open(get_filename_datetime(), mode='w') as outfile:
