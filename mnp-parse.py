@@ -48,10 +48,17 @@ def write_outfile(parsed_data, outfile):
     with open(outfile, mode='w') as outfile:
         entry_writer = csv.writer(outfile, delimiter=',',quotechar='"')
 
+        # Write three rows which are header information
+        current_date = date.today().strftime("%B %d, %Y")
+        title_string = 'Guest list for {}'.format(current_date)
+        entry_writer.writerow([title_string])
+        entry_writer.writerow(['\n'])
+        entry_writer.writerow(['Name', 'Notes'])
+
         for entry in parsed_data:
             entry_writer.writerow([entry[0], entry[1]])
 
-    status = "The entrance file was successfully created!"
+    status = "The guest list file was successfully created!"
 
     return status
 
