@@ -83,7 +83,7 @@ def main ():
     entry_list = create_unparsed_list(unparsed_csv)
 
     # Grab list of guests to be appended to the list
-    additional_guests_list = create_unparsed_list('input/guests.csv', False)
+    additional_guests_list = create_unparsed_list(guest_csv, False)
 
     # Combine the lists
     entry_list.extend(additional_guests_list)
