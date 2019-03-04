@@ -10,8 +10,8 @@ def create_unparsed_list(unparsed_csv, skip_flag=True):
         entries to a dance. """
 
     # Open unparsed csv
-    with open(unparsed_csv) as infile:
-        csv_reader = csv.reader(infile, delimiter=',')
+    with open(unparsed_csv, 'rU') as infile:
+        csv_reader = csv.reader(infile, delimiter=',', dialect=csv.excel_tab)
 
         # Skip first three lines
         if skip_flag:
