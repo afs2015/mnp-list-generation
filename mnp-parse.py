@@ -83,6 +83,7 @@ def main ():
     entry_list = create_unparsed_list(unparsed_csv)
 
     # Grab list of guests to be appended to the list
+    # TODO: Script currently breaks if guest added without , after
     additional_guests_list = create_unparsed_list(guest_csv, False)
 
     # Combine the lists
